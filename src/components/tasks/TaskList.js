@@ -1,10 +1,21 @@
-import { useEffect } from "react";
+import { Button, Card, CardActions, CardContent, makeStyles } from "@material-ui/core";
+import { useEffect, useState } from "react";
 import { getTaskList } from '../../api/TasksApi';
 
+const useStyles = makeStyles({
+    card: {
+        marginTop: 10
+    }
+});
+
 function TaskList() {
+    const classes = useStyles();
+    const [taskList, setTaskList] = useState([]);
+
     useEffect(() => {
         (async () => {
             let result = await getTaskList();
+            setTaskList(result);
             console.log(result);
         })()
     }, []);
@@ -12,7 +23,17 @@ function TaskList() {
 
     return (
         <div>
-
+            {taskList.map((task) =>
+                <div key={task.id}>
+                    <Card className={classes.card}>
+                        <CardContent>
+                            {task.title}
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small">WOW</Button>
+                        </CardActions>
+                    </Card>
+                </div>)}
         </div>
     )
 }
