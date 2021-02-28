@@ -30,7 +30,7 @@ function TaskList() {
                             {task.title}
                         </CardContent>
                         <CardActions>
-                            <Button size="small">WOW</Button>
+                            <Button size="small">Open</Button>
                         </CardActions>
                     </Card>
                 </div>)}
