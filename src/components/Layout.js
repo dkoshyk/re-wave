@@ -18,6 +18,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import { Container } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -131,18 +132,18 @@ function Layout(props) {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem button key="1">
+                    <ListItemLink key="1" to="/">
                         <ListItemIcon><HomeIcon /></ListItemIcon>
                         <ListItemText primary="Home" />
-                    </ListItem>
-                    <ListItem button key="3">
+                    </ListItemLink>
+                    <ListItemLink key="2" to="/login">
                         <ListItemIcon><FormatListBulletedIcon /></ListItemIcon>
                         <ListItemText primary="Login" />
-                    </ListItem>
-                    <ListItem button key="2">
+                    </ListItemLink>
+                    <ListItemLink key="3" to="/tasks">
                         <ListItemIcon><FormatListBulletedIcon /></ListItemIcon>
                         <ListItemText primary="Tasks" />
-                    </ListItem>
+                    </ListItemLink>
                 </List>
             </Drawer>
             <main
@@ -159,4 +160,9 @@ function Layout(props) {
     );
 }
 
+function ListItemLink(props) {
+    return <ListItem button component={Link} {...props} />;
+}
+
 export default Layout;
+

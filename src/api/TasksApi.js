@@ -1,7 +1,7 @@
-import http from './HttpCommon';
+import http from 'axios';
 
 export async function getTaskList() {
-    const response = await http.get('tasks')
+    const response = await http.get('tasks');
     if (response.status === 200) return response.data;
 
     throw response;

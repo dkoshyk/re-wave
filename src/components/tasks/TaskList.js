@@ -15,7 +15,7 @@ function TaskList() {
     useEffect(() => {
         (async () => {
             let result = await getTaskList();
-            setTaskList(result);
+            setTaskList(result.items);
             console.log(result);
         })()
     }, []);
