@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {getToken} from '../../api/AuthApi';
-import {useHistory} from "react-router";
-import {Box} from "@material-ui/core";
+import { getToken } from '../../api/AuthApi';
+import { useHistory } from "react-router";
+import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -68,7 +68,7 @@ function Login() {
         <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon/>
+                    <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in
