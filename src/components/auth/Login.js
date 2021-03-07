@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { getToken } from '../../api/AuthApi';
 import { useHistory } from "react-router";
+import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -31,34 +31,48 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-function Login(props) {
+function Login() {
     const history = useHistory();
     const classes = useStyles();
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    let tokenKey = 'token';
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
         var response = await getToken(login, password);
         if (response.result) {
-            localStorage.setItem('token', JSON.stringify(response.token));
-
+            localStorage.setItem(tokenKey, JSON.stringify(response.token));
             history.push('/');
         }
     }
 
+    const onLogout = () => {
+        localStorage.removeItem(tokenKey);
+        history.push('/');
+    }
+
+    let token = localStorage.getItem(tokenKey);
+    if (token)
+        return (
+            <div className={classes.paper}>
+                <Box p={2}>
+                    <Typography variant={"h4"}>Welcome, User</Typography>
+                </Box>
+                <Button variant={"contained"} onClick={onLogout}>Log out</Button>
+            </div>
+        );
+
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in
-        </Typography>
+                </Typography>
                 <form className={classes.form} noValidate onSubmit={onSubmit}>
                     <TextField
                         variant="outlined"
@@ -70,7 +84,9 @@ function Login(props) {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        onChange={e => { setLogin(e.target.value) }}
+                        onChange={e => {
+                            setLogin(e.target.value)
+                        }}
                     />
                     <TextField
                         variant="outlined"
@@ -82,7 +98,9 @@ function Login(props) {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                        onChange={e => { setPassword(e.target.value) }}
+                        onChange={e => {
+                            setPassword(e.target.value)
+                        }}
                     />
                     <Button
                         type="submit"
@@ -92,7 +110,7 @@ function Login(props) {
                         className={classes.submit}
                     >
                         Login
-          </Button>
+                    </Button>
                 </form>
             </div>
         </Container>
