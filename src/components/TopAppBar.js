@@ -2,6 +2,8 @@ import { AppBar, IconButton, makeStyles, Toolbar, Typography } from '@material-u
 import React from 'react'
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
+import Box from '@material-ui/core/Box';
+import { connect } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const TopAppBar = ({ open, handleDrawerOpen }) => {
+const TopAppBar = ({ open, handleDrawerOpen, user }) => {
     const classes = useStyles();
 
     return (
@@ -53,8 +55,22 @@ export const TopAppBar = ({ open, handleDrawerOpen }) => {
                 </IconButton>
                 <Typography variant="h6" noWrap>
                     Boot Wave
-          </Typography>
+                </Typography>
+                <Box pl={3}>
+                    {user.login
+                        ? <Typography variant="body2">Hello, {user.login}</Typography>
+                        : null
+                    }
+                </Box>
             </Toolbar>
         </AppBar>
     )
 }
+
+const mapStateToProps = ({ user }) => {
+    return {
+        user
+    }
+};
+
+export default connect(mapStateToProps)(TopAppBar);

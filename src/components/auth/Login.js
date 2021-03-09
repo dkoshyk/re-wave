@@ -9,6 +9,8 @@ import Container from '@material-ui/core/Container';
 import { getToken } from '../../api/AuthApi';
 import { useHistory } from "react-router";
 import { Box } from "@material-ui/core";
+import { connect } from 'react-redux';
+import { userLogIn } from '../../redux/actions/userActions';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Login() {
+function Login({userLogIn}) {
     const history = useHistory();
     const classes = useStyles();
     const [login, setLogin] = useState('');
@@ -44,6 +46,7 @@ function Login() {
         var response = await getToken(login, password);
         if (response.result) {
             localStorage.setItem(tokenKey, JSON.stringify(response.token));
+            userLogIn({ login });
             history.push('/');
         }
     }
@@ -58,7 +61,7 @@ function Login() {
         return (
             <div className={classes.paper}>
                 <Box p={2}>
-                    <Typography variant={"h4"}>Welcome, User</Typography>
+                    <Typography variant={"h4"}>Welcome</Typography>
                 </Box>
                 <Button variant={"contained"} onClick={onLogout}>Log out</Button>
             </div>
@@ -117,4 +120,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default connect(null, { userLogIn })(Login);
