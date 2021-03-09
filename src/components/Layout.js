@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Container } from '@material-ui/core';
-import { TopAppBar } from './TopAppBar';
+import TopAppBar from './TopAppBar';
 import MyDrawer from './MyDrawer';
 
 const drawerWidth = 240;
