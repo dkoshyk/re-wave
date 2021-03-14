@@ -1,10 +1,10 @@
 import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useContext } from 'react'
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
-import { removeAuthUser, getAuthUser, isAuth } from './auth/AuthService';
 import { useHistory } from "react-router";
+import { UserContext } from './auth/UserContext';
 
 const drawerWidth = 240;
 
@@ -42,14 +42,15 @@ export const TopAppBar = ({ open, handleDrawerOpen }) => {
     const classes = useStyles();
     const history = useHistory();
 
+    const { user, logoutUser } = useContext(UserContext);
+    const auth = user.result;
+
     const onLogout = () => {
-        removeAuthUser();
+        logoutUser();
         history.push('/');
     }
 
-    const user = getAuthUser();
-    const showLogoutButton = isAuth();
-    const loginLogoutContent = showLogoutButton ?
+    const loginLogoutContent = auth ?
         <div className={classes.rightButton}>
             ({user.fullName})
             <Button onClick={onLogout} color="inherit">Logout</Button>

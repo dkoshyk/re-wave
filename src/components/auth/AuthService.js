@@ -1,9 +1,5 @@
 const STORAGE_KEY = 'user';
 
-export function isAuth() {
-    return getAuthUser()?.result ?? false;
-}
-
 export function getAuthUser() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY));
 }

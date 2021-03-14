@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { signIn } from '../../api/AuthApi';
 import { useHistory } from "react-router";
-import { isAuth, saveAuthUser } from './AuthService';
+import { UserContext } from './UserContext';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -37,18 +37,16 @@ function Login() {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
+    const { user, loginUser } = useContext(UserContext);
+
     const onSubmit = async (e) => {
         e.preventDefault();
 
         var response = await signIn(login, password);
         if (response.result) {
-            saveAuthUser(response);
+            loginUser(response);
             history.push('/');
         }
-    }
-
-    if (isAuth()) {
-        return <div>pls Logout</div>
     }
 
     return (
