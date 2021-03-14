@@ -6,9 +6,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { getToken } from '../../api/AuthApi';
+import { signIn } from '../../api/AuthApi';
 import { useHistory } from "react-router";
-import { Box } from "@material-ui/core";
+import { isAuth, saveAuthUser } from './AuthService';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -36,33 +36,20 @@ function Login() {
     const classes = useStyles();
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-    let tokenKey = 'token';
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        var response = await getToken(login, password);
+        var response = await signIn(login, password);
         if (response.result) {
-            localStorage.setItem(tokenKey, JSON.stringify(response.token));
+            saveAuthUser(response);
             history.push('/');
         }
     }
 
-    const onLogout = () => {
-        localStorage.removeItem(tokenKey);
-        history.push('/');
+    if (isAuth()) {
+        return <div>pls Logout</div>
     }
-
-    let token = localStorage.getItem(tokenKey);
-    if (token)
-        return (
-            <div className={classes.paper}>
-                <Box p={2}>
-                    <Typography variant={"h4"}>Welcome, User</Typography>
-                </Box>
-                <Button variant={"contained"} onClick={onLogout}>Log out</Button>
-            </div>
-        );
 
     return (
         <Container component="main" maxWidth="xs">

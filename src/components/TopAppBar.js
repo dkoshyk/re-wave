@@ -1,13 +1,17 @@
-import { AppBar, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core'
 import React from 'react'
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
+import { removeAuthUser, getAuthUser, isAuth } from './auth/AuthService';
+import { useHistory } from "react-router";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+        flexGrow: 1,
     },
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
@@ -29,32 +33,51 @@ const useStyles = makeStyles((theme) => ({
     hide: {
         display: 'none',
     },
+    rightButton: {
+        marginLeft: 'auto'
+    }
 }));
 
 export const TopAppBar = ({ open, handleDrawerOpen }) => {
     const classes = useStyles();
+    const history = useHistory();
+
+    const onLogout = () => {
+        removeAuthUser();
+        history.push('/');
+    }
+
+    const user = getAuthUser();
+    const showLogoutButton = isAuth();
+    const loginLogoutContent = showLogoutButton ?
+        <div className={classes.rightButton}>
+            ({user.fullName})
+            <Button onClick={onLogout} color="inherit">Logout</Button>
+        </div> :
+        <Button className={classes.rightButton} component={Link} to="/login" color="inherit">Login</Button>;
 
     return (
-        <AppBar
-            position="fixed"
-            className={clsx(classes.appBar, {
-                [classes.appBarShift]: open,
-            })}
-        >
-            <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    edge="start"
-                    className={clsx(classes.menuButton, open && classes.hide)}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" noWrap>
-                    Boot Wave
-          </Typography>
-            </Toolbar>
-        </AppBar>
+        <div className={classes.root}>
+            <AppBar
+                position="fixed"
+                className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                })}
+            >
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        edge="start"
+                        className={clsx(classes.menuButton, open && classes.hide)}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" noWrap>Boot Wave</Typography>
+                    {loginLogoutContent}
+                </Toolbar>
+            </AppBar>
+        </div>
     )
 }

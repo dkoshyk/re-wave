@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -59,11 +58,7 @@ function MyDrawer({ handleDrawerClose, open }) {
                     <ListItemIcon><HomeIcon /></ListItemIcon>
                     <ListItemText primary="Home" />
                 </ListItemLink>
-                <ListItemLink key="2" to="/login">
-                    <ListItemIcon><FormatListBulletedIcon /></ListItemIcon>
-                    <ListItemText primary="Login" />
-                </ListItemLink>
-                <ListItemLink key="3" to="/tasks">
+                <ListItemLink key="2" to="/tasks">
                     <ListItemIcon><FormatListBulletedIcon /></ListItemIcon>
                     <ListItemText primary="Tasks" />
                 </ListItemLink>
@@ -77,6 +72,3 @@ function ListItemLink(props) {
 }
 
 export default MyDrawer;
-
-
-
