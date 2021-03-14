@@ -64,7 +64,7 @@ function TodoList(props) {
     items.sort((x, y) => x.name > y.name ? 1 : -1);
 
     let listContent = items.map((item, index) =>
-        <ListItem>
+        <ListItem key={index}>
             <ListItemText>
                 {item.name}
             </ListItemText>
