@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "../components/auth/AuthService";
 
 export function InitAxios() {
     const baseUrl = process.env.REACT_APP_API_BASE_URL;
@@ -25,9 +26,9 @@ export function InitAxios() {
     //         Promise.reject(error)
     //     });
 
-    const token = localStorage.getItem('token');
+    const token = getToken();
     if (token) {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(token);
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     }
 
     console.log('axios', axios.defaults);
