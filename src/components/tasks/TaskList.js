@@ -1,6 +1,7 @@
 import { Button, Card, CardActions, CardContent, makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { getTaskList } from '../../api/TasksApi';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
     card: {
@@ -24,7 +25,7 @@ function TaskList() {
     return (
         <div>
             <div>
-
+                <Button component={Link} to="/tasks/create" variant="contained" color="primary">Create</Button>
             </div>
             {taskList.map((task) =>
                 <div key={task.id}>
