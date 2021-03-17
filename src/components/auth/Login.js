@@ -37,7 +37,7 @@ function Login() {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
-    const { user, loginUser } = useContext(UserContext);
+    const { loginUser } = useContext(UserContext);
 
     const onSubmit = async (e) => {
         e.preventDefault();

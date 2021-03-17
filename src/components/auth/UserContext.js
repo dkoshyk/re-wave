@@ -1,7 +1,6 @@
 import React from "react";
-import { getAuthUser } from "./AuthService";
 
-const UserContext = React.createContext(getAuthUser());
+const UserContext = React.createContext();
 
 export {
     UserContext

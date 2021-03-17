@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getToken } from "../components/auth/AuthService";
 
-export function InitAxios() {
+export function initAxios() {
     const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
     axios.create({
@@ -13,23 +13,15 @@ export function InitAxios() {
 
     axios.defaults.baseURL = baseUrl;
 
-    // axios.interceptors.request.use(
-    //     config => {
-    //         const token = localStorage.getItem('token');
-    //         if (token) {
-    //             config.headers['Authorization'] = 'Bearer ' + token;
-    //         }
+    setApiToken(getToken());
+}
 
-    //         return config;
-    //     },
-    //     error => {
-    //         Promise.reject(error)
-    //     });
-
-    const token = getToken();
+export function setApiToken(token) {
     if (token) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     }
+}
 
-    console.log('axios', axios.defaults);
+export function removeApiToken() {
+    axios.defaults.headers.common['Authorization'] = '';
 }

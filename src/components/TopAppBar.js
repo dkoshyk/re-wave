@@ -42,15 +42,14 @@ export const TopAppBar = ({ open, handleDrawerOpen }) => {
     const classes = useStyles();
     const history = useHistory();
 
-    const { user, logoutUser } = useContext(UserContext);
-    const auth = user.result;
+    const { user, logoutUser, isAuth } = useContext(UserContext);
 
     const onLogout = () => {
         logoutUser();
-        history.push('/');
+        history.push('/login');
     }
 
-    const loginLogoutContent = auth ?
+    const loginLogoutContent = isAuth() ?
         <div className={classes.rightButton}>
             ({user.fullName})
             <Button onClick={onLogout} color="inherit">Logout</Button>
