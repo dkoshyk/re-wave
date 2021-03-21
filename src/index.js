@@ -7,13 +7,14 @@ import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './components/auth/UserProvider';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter basename={process.env.REACT_APP_BASENAME_URL}>
-      <UserProvider>
-        <App />
-      </UserProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <BrowserRouter basename={process.env.REACT_APP_BASENAME_URL}>
+    <UserProvider>
+      <App />
+    </UserProvider>
+  </BrowserRouter>
+  // </React.StrictMode>
+  ,
   document.getElementById('root')
 );
 

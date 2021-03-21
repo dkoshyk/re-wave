@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getTaskList } from '../../api/TasksApi';
 import { Link } from 'react-router-dom';
 import Pagination from '@material-ui/lab/Pagination';
+import { getTaskTypeLabel } from "../../constants/TaskType";
 
 const useStyles = makeStyles({
     card: {
@@ -43,7 +44,20 @@ function TaskList() {
                 <div key={task.id}>
                     <Card className={classes.card}>
                         <CardContent>
-                            {task.title}
+
+                            <Grid container spacing={3}>
+                                <Grid item xs={6}> <strong>{task.title}</strong></Grid>
+                                <Grid item xs={6}> {getTaskTypeLabel(task.type)} </Grid>
+                            </Grid>
+
+                            {
+                                task.description ?
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}> {task.description} </Grid>
+                                    </Grid>
+                                    : ''
+                            }
+
                         </CardContent>
                         <CardActions>
                             <Button variant="outlined" color="primary" size="small">Edit</Button>
