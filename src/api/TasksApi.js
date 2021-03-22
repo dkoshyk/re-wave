@@ -18,16 +18,16 @@ export async function getTask(id) {
     throw response;
 }
 
-export async function createTask({ title, description, type }) {
-    const response = await http.post('tasks', { title, description, type });
+export async function createTask({ name, description, type, status }) {
+    const response = await http.post('tasks', { title: name, description, type, status });
 
     if (response.status >= 200 && response.status < 300) return response.data;
 
     throw response;
 }
 
-export async function updateTask({ id, title, description, type, status }) {
-    const response = await http.put('tasks', { id, title, description, type, status });
+export async function updateTask({ id, name, description, type, status }) {
+    const response = await http.put('tasks', { id, title: name, description, type, status });
 
     if (response.status >= 200 && response.status < 300) return response.data;
 

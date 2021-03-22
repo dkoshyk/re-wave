@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Container } from '@material-ui/core';
 import { TopAppBar } from './TopAppBar';
 import MyDrawer from './MyDrawer';
+import { SnackbarProvider } from './shared/SnackbarProvider';
 
 const drawerWidth = 240;
 
@@ -49,6 +50,7 @@ function Layout(props) {
 
     return (
         <div>
+
             <CssBaseline />
             <TopAppBar open={open} handleDrawerOpen={handleDrawerOpen} />
             <MyDrawer handleDrawerClose={handleDrawerClose} open={open} />
@@ -59,9 +61,12 @@ function Layout(props) {
             >
                 <div className={classes.drawerHeader} />
                 <Container maxWidth="md">
-                    {props.children}
+                    <SnackbarProvider>
+                        {props.children}
+                    </SnackbarProvider>
                 </Container>
             </main>
+
         </div >
     );
 }
