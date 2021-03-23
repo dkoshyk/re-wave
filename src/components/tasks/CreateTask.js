@@ -42,7 +42,7 @@ export function CreateTask() {
                 <Typography className={classes.cardTitle}>Create Task</Typography>
                 <form onSubmit={e => handleSubmit(e)}>
                     <div>
-                        <TextField label='Name' variant="outlined" className={classes.textField}
+                        <TextField label='Title' variant="outlined" className={classes.textField}
                             onChange={e => setName(e.target.value)}
                             value={name}
                             fullWidth>

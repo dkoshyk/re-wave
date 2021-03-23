@@ -1,9 +1,10 @@
 import { Button, Card, CardActions, CardContent, Grid, makeStyles, TextField } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { getTaskList } from '../../api/TasksApi';
+import { deleteTask, getTaskList } from '../../api/TasksApi';
 import { Link } from 'react-router-dom';
 import Pagination from '@material-ui/lab/Pagination';
 import { getTaskTypeLabel } from "../../constants/TaskType";
+import ConfirmDialog from "./ConfirmDialog";
 
 const useStyles = makeStyles({
     card: {
@@ -18,10 +19,17 @@ function TaskList() {
     const [containsTitle, setContainsTitle] = useState('');
     const [taskList, setTaskList] = useState([]);
     const [count, setCount] = useState(0);
+    const [state, setState] = useState(0);
+    const forceUpdate = () => setState(state + 1);
 
     const handlePageChange = (event, value) => {
         setPage(value);
     };
+
+    const handleDeleteTask = async (event, id) => {
+        await deleteTask(id);
+        forceUpdate();
+    }
 
     useEffect(() => {
         (async () => {
@@ -30,8 +38,7 @@ function TaskList() {
             setCount(result.count)
             console.log(result);
         })()
-    }, [containsTitle, page, pageSize]);
-    // [] - means that effect works once
+    }, [containsTitle, page, pageSize, state]);
 
     return (
         <div>
@@ -57,11 +64,14 @@ function TaskList() {
                                     </Grid>
                                     : ''
                             }
-
                         </CardContent>
                         <CardActions>
-                            <Button variant="outlined" color="primary" size="small">Edit</Button>
-                            <Button variant="outlined" color="secondary" size="small">Delete</Button>
+                            <Button component={Link} to={`tasks/${task.id}/edit`} variant="outlined" color="primary" size="small">Edit</Button>
+                            <ConfirmDialog buttonName="Delete"
+                                buttonColor="secondary"
+                                questionText="Do you agree to delete task?"
+                                onAgreeAction={(e) => handleDeleteTask(e, task.id)}
+                            />
                         </CardActions>
                     </Card>
                 </div>)}
@@ -70,3 +80,5 @@ function TaskList() {
 }
 
 export default TaskList;
+
+

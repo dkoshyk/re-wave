@@ -1,9 +1,10 @@
 import { Button, Card, CardContent, Grid, makeStyles, MenuItem, TextField, Typography } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getTask, updateTask } from "../../api/TasksApi";
 import { taskTypes } from "../../constants/TaskType";
 import { Link } from 'react-router-dom';
+import { SnackbarContext } from "../shared/ShackbarContext";
 
 const useStyles = makeStyles(() => ({
     textField: {
@@ -21,15 +22,16 @@ export function EditTask() {
     const [name, setName] = useState('');
     const [type, setType] = useState('task');
     const [description, setDescription] = useState('');
+    const { showErrors, showSuccess } = useContext(SnackbarContext);
 
     async function handleSubmit(e) {
         e.preventDefault();
 
         try {
-            await updateTask({ name, description, type });
+            await updateTask({ id: taskId, name, description, type });
+            showSuccess("Updated!");
         } catch (error) {
-            console.log('handled errors', error.response);
-
+            showErrors(error.response);
         }
     }
 
@@ -51,7 +53,7 @@ export function EditTask() {
                 <Typography className={classes.cardTitle}>Create Task</Typography>
                 <form onSubmit={e => handleSubmit(e)}>
                     <div>
-                        <TextField label='Name' variant="outlined" className={classes.textField}
+                        <TextField label='Title' variant="outlined" className={classes.textField}
                             onChange={e => setName(e.target.value)}
                             value={name}
                             fullWidth>
