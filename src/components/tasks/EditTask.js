@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { getTask, updateTask } from "../../api/TasksApi";
 import { taskTypes } from "../../constants/TaskType";
 import { Link } from 'react-router-dom';
-import { SnackbarContext } from "../shared/ShackbarContext";
+import { SnackbarContext } from "../shared/SnackbarContext";
 
 const useStyles = makeStyles(() => ({
     textField: {

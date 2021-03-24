@@ -1,7 +1,7 @@
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useState } from "react";
-import { SnackbarContext } from "./ShackbarContext";
+import { SnackbarContext } from "./SnackbarContext";
 
 export const SnackbarProvider = ({ children }) => {
     const [snackbar, setSnackbar] = useState(
