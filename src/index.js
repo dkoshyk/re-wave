@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import { UserProvider } from './components/auth/UserProvider';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <BrowserRouter basename={process.env.REACT_APP_BASENAME_URL}>
+    <UserProvider>
+      <App />
+    </UserProvider>
+  </BrowserRouter>
+  // </React.StrictMode>
+  ,
   document.getElementById('root')
 );
 
