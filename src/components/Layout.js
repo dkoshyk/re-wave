@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Container } from '@material-ui/core';
-import { TopAppBar } from './TopAppBar';
+import TopAppBar from "./TopAppBar";
 import MyDrawer from './MyDrawer';
 import { SnackbarProvider } from './shared/SnackbarProvider';
 
