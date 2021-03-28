@@ -1,10 +1,12 @@
 import { Button, Card, CardContent, Grid, makeStyles, MenuItem, TextField, Typography } from "@material-ui/core";
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { createTask } from "../../api/TasksApi";
 import { taskTypes } from "../../constants/TaskType";
 import { Link } from 'react-router-dom';
 import { SnackbarContext } from './../shared/SnackbarContext';
+import { connect } from "react-redux";
+import { taskAdded } from "../../redux/actions/tasksActions";
 
 const useStyles = makeStyles(() => ({
     textField: {
@@ -15,7 +17,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export function CreateTask() {
+function CreateTask({ taskAdded }) {
     const classes = useStyles();
     const history = useHistory();
     const [name, setName] = useState('');
@@ -27,7 +29,8 @@ export function CreateTask() {
         e.preventDefault();
 
         try {
-            await createTask({ name, description, type });
+            let createdTask = await createTask({ name, description, type });
+            taskAdded(createdTask);
             showSuccess("Created!");
             history.push('/tasks');
         } catch (error) {
@@ -74,10 +77,10 @@ export function CreateTask() {
                         <Grid container justify="space-between">
                             <Button type='submit' variant='contained' color='primary'>
                                 Create
-                        </Button>
+                            </Button>
                             <Button component={Link} to={'/tasks'} variant='outlined' color='primary'>
                                 Cancel
-                        </Button>
+                            </Button>
                         </Grid>
 
                     </div>
@@ -86,3 +89,5 @@ export function CreateTask() {
         </Card>
     );
 }
+
+export default connect(null, { taskAdded })(CreateTask);

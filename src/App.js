@@ -5,10 +5,10 @@ import Login from './components/auth/Login';
 import TaskList from './components/tasks/TaskList';
 import { initAxios } from './api/HttpCommon';
 import { Home } from './components/home/Home';
-import { CreateTask } from './components/tasks/CreateTask';
 import { EditTask } from './components/tasks/EditTask';
 import NotFound from './components/NotFound';
 import { AuthorizeRoute } from './components/auth/AuthorizeRoute';
+import CreateTask from "./components/tasks/CreateTask";
 
 function App() {
 
