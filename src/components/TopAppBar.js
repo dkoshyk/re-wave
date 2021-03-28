@@ -1,24 +1,18 @@
 import {
     AppBar,
-    Badge,
-    Box,
     Button,
     IconButton,
-    List,
-    ListItem,
-    ListItemText,
     makeStyles,
-    Popover,
     Toolbar,
     Typography
 } from '@material-ui/core'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router";
 import { UserContext } from './auth/UserContext';
-import { connect } from "react-redux";
+import LastTasksPopover from './tasks/LastTasksPopover';
 
 const drawerWidth = 240;
 
@@ -52,11 +46,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const TopAppBar = ({ open, handleDrawerOpen, tasks }) => {
+export default function TopAppBar({ open, handleDrawerOpen }) {
     const classes = useStyles();
     const history = useHistory();
-    const [isTaskPopoverOpen, setIsTaskPopoverOpen] = useState(false);
-    const [popoverAnchor, setPopoverAnchor] = useState(null);
 
     const { user, logoutUser, isAuth } = useContext(UserContext);
 
@@ -65,43 +57,9 @@ const TopAppBar = ({ open, handleDrawerOpen, tasks }) => {
         history.push('/login');
     }
 
-    function onPopoverButtonClick(event) {
-        if (!popoverAnchor)
-            setPopoverAnchor(event.currentTarget);
-        setIsTaskPopoverOpen(true);
-    }
-
     const loginLogoutContent = isAuth() ?
         <div className={classes.rightButton}>
-            <Badge badgeContent={tasks.length} color="secondary">
-                <Button onClick={onPopoverButtonClick} variant="contained"> Open tasks </Button>
-            </Badge>
-            <Popover anchorEl={popoverAnchor}
-                open={isTaskPopoverOpen}
-                onClose={() => setIsTaskPopoverOpen(false)}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}>
-                {tasks && tasks.length
-                    ?
-                    <List>
-                        {tasks.map(task =>
-                            <ListItem key={task.id}>
-                                <ListItemText primary={task.title} secondary={task.description} />
-                            </ListItem>
-                        )}
-                    </List>
-                    :
-                    <Box p={1}>
-                        <Typography>Task notification list is empty</Typography>
-                    </Box>
-                }
-            </Popover>
+            <LastTasksPopover />
             ({user.fullName})
             <Button onClick={onLogout} color="inherit">Logout</Button>
         </div> :
@@ -132,5 +90,3 @@ const TopAppBar = ({ open, handleDrawerOpen, tasks }) => {
         </div>
     )
 }
-
-export default connect(({ tasks }) => ({ tasks }))(TopAppBar);

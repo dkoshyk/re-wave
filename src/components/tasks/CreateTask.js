@@ -90,4 +90,4 @@ function CreateTask({ taskAdded }) {
     );
 }
 
-export default connect(null, { taskAdded })(CreateTask);
+export default connect(null, { taskAdded })(CreateTask); //hoc
